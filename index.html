@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Online Calculator</title>
+    <title>RenovationValueEstimator</title>
+    <style>
+        .output-box {
+            text-align: right;
+            display: inline-block;
+            width: 200px; /* Adjust the width as needed */
+        }
+    </style>
 </head>
 <body>
-    <h2>Simple Calculator</h2>
+    <h2>Block Renovation Investment to Value Calculator</h2>
     <form>
         <label for="inputA">A) Total houses on block:</label>
         <input type="number" id="inputA">
@@ -20,24 +27,25 @@
         <br>
         <button type="button" onclick="calculate()">Calculate</button>
     </form>
-    <h3>X) Total cost to renovate: <span id="outputX"></span></h3>
-    <h3>Y) Total home value increase: <span id="outputY"></span></h3>
+    <h3>X) Total cost to renovate: <span id="outputX" class="output-box"></span></h3>
+    <h3>Y) Total home value increase: <span id="outputY" class="output-box"></span></h3>
 
     <script>
         // Placeholder function for F(p) - replace this with your actual lookup table logic
         function F(p) {
             // Example lookup table
             const lookupTable = {
-                0: 190000,
-                5: 140000,
-                10: 100000,
-                15: 80000,
-                20: 75000,
-                25: 70000,
-                30: 67000,
-                35: 64000,
-                40: 58000,
-                45: 50000
+                0: 0,
+                10: 0.1,
+                20: 0.2,
+                30: 0.3,
+                40: 0.4,
+                50: 0.5,
+                60: 0.6,
+                70: 0.7,
+                80: 0.8,
+                90: 0.9,
+                100: 1
             };
             return lookupTable[p] || 0;
         }
@@ -54,9 +62,9 @@
             // Calculate Y
             var Y = A * (F(C) - F(B));
 
-            // Display results
-            document.getElementById('outputX').textContent = X.toFixed(2);
-            document.getElementById('outputY').textContent = Y.toFixed(2);
+            // Display results with commas for thousands separators
+            document.getElementById('outputX').textContent = X.toLocaleString();
+            document.getElementById('outputY').textContent = Y.toLocaleString();
         }
     </script>
 </body>
