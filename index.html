@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>RenovationValueEstimator</title>
+    <title>Online Calculator</title>
     <style>
         .output-box {
             text-align: right;
@@ -11,7 +11,7 @@
     </style>
 </head>
 <body>
-    <h2>Block Renovation Investment to Value Calculator</h2>
+    <h2>Simple Calculator</h2>
     <form>
         <label for="inputA">A) Total houses on block:</label>
         <input type="number" id="inputA">
@@ -31,7 +31,7 @@
     <h3>Y) Total home value increase: <span id="outputY" class="output-box"></span></h3>
 
     <script>
-        // Placeholder function for F(p) - replace this with your actual lookup table logic
+        // Improved lookup function with interpolation
         function F(p) {
             // Example lookup table
             const lookupTable = {
@@ -47,7 +47,18 @@
                 90: 0.9,
                 100: 1
             };
-            return lookupTable[p] || 0;
+            
+            // Find the nearest keys
+            const keys = Object.keys(lookupTable).map(Number).sort((a, b) => a - b);
+            for (let i = 0; i < keys.length - 1; i++) {
+                if (p >= keys[i] && p <= keys[i + 1]) {
+                    // Linear interpolation
+                    const x0 = keys[i], x1 = keys[i + 1];
+                    const y0 = lookupTable[x0], y1 = lookupTable[x1];
+                    return y0 + (y1 - y0) * (p - x0) / (x1 - x0);
+                }
+            }
+            return lookupTable[p] || 0; // Return exact match or 0 if not found
         }
 
         function calculate() {
